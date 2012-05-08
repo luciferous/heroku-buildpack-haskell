@@ -1,6 +1,6 @@
 # Heroku buildpack: Haskell
 
-This is a (Heroku buildpack)[http://devcenter.heroku.com/articles/buildpacks]
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
 for Haskell apps. It uses cabal-1.14.0.
 
 ## Usage
