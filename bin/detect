@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -f $1/*.cabal ]; then
+  echo "Haskell" && exit 0
+else
+  echo "no" && exit 1
+fi

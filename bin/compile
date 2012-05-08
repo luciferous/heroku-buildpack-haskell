@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+BIN_DIR=$(dirname $0)
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+# include .files when moving things around
+shopt -s dotglob
+
+cd $BUILD_DIR
+
+# move app things to www
+mkdir -p $CACHE_DIR/www
+mv * $CACHE_DIR/www
+mv $CACHE_DIR/www .
+
+# keep Procfile
+if [ -f www/Procfile ]; then
+  mv www/Procfile .
+fi
+
+GHC_URL="http://lcfrs.org/heroku-buildpack-haskell/ghc.tar.gz"
+echo "-----> Bundling GHC"
+curl --silent --max-time 60 --location "$GHC_URL" | tar xz
+
+CABAL_URL="http://lcfrs.org/heroku-buildpack-haskell/cabal.tar.gz"
+echo "-----> Bundling Cabal"
+curl --silent --max-time 60 --location "$CABAL_URL" | tar xz
+
+# make ghc and cabal available in bin
+mkdir -p bin
+ln -s /app/ghc/bin/ghc bin/ghc
+ln -s /app/.cabal/bin/cabal bin/cabal
+
+mkdir -p /app/usr/lib
+ln -s /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
+
+cat >>boot.sh <<EOF
+export LD_LIBRARY_PATH=/app/usr/lib
+EOF
+
+cd $BUILD_DIR
+cabal install .
+
+chmod +x boot.sh
+
+# clean the cache
+rm -rf $CACHE_DIR/*
