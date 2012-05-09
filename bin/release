@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cat <<EOF
+---
+config_vars:
+  PATH: /app/.cabal/bin:/app/bin:/usr/local/bin:/usr/bin:/bin
+EOF
