@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-set -e
-
-echo $1
 
 if test -n "$(find "$1" -maxdepth 1 -name '*.cabal' -print -quit)"
 then echo Haskell
