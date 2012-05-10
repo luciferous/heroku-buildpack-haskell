@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+set -e
 
-if [ -f $1/*.cabal ]; then
-  echo "Haskell" && exit 0
-else
-  echo "no" && exit 1
+echo $1
+
+if test -n "$(find "$1" -maxdepth 1 -name '*.cabal' -print -quit)"
+then echo Haskell
+else echo no; exit 1
 fi
