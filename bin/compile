@@ -7,6 +7,11 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+echo "-----> Info"
+echo "       build-dir: $BUILD_DIR"
+echo "       build-dir: $CACHE_DIR"
+echo "       pwd: `pwd`"
+
 cd $BUILD_DIR
 
 mkdir -p $CACHE_DIR
@@ -22,7 +27,7 @@ fi
 
 if [ ! -e .cabal ]; then
   CABAL_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/cabal.tar.gz"
-  echo "-----> Bundling Cabal"
+  echo "-----> Downloading Cabal"
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz
 fi
 
