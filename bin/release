@@ -2,6 +2,16 @@
 
 $BUILD_DIR=$1
 
+echo "build-dir: $BUILD_DIR"
+echo "pwd: `pwd`"
+
+ghc/bin/ghc-pkg describe base > base.conf
+sed -i "s#ld-options:#ld-options: -L`pwd`/lib#"
+ghc/bin/ghc-pkg update base.conf
+rm base.conf
+
+.cabal/bin/cabal install
+
 cat <<EOF
 ---
 config_vars:

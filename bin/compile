@@ -38,13 +38,7 @@ ln -s .cabal/bin/cabal bin/cabal
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
-ghc/bin/ghc-pkg describe base > base.conf
-sed -i "s#ld-options:#ld-options: -L`pwd`/lib#"
-ghc/bin/ghc-pkg update base.conf
-rm base.conf
-
 .cabal/bin/cabal update
-.cabal/bin/cabal install
 
 rm -rf $CACHE_DIR/ghc
 cp -R ghc $CACHE_DIR/ghc

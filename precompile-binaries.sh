@@ -5,7 +5,7 @@ mkdir -p $HOME/usr/lib
 ln -s /usr/lib/libgmp.so.3 $HOME/usr/lib/libgmp.so
 
 # ghc
-curl --silent http://www.haskell.org/ghc/dist/7.4.1/ghc-7.4.1-x86_64-unknown-linux.tar.bz2|tar xj
+curl -# http://www.haskell.org/ghc/dist/7.4.1/ghc-7.4.1-x86_64-unknown-linux.tar.bz2|tar xj
 cd ghc-7.4.1/
 ./configure --prefix=$HOME/ghc --with-gmp-libraries=$HOME/usr/lib
 make install
