@@ -40,8 +40,10 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
 .cabal/bin/cabal update
 
+echo "-----> Copying ghc to cache"
 rm -rf $CACHE_DIR/ghc
 cp -R ghc $CACHE_DIR/ghc
 
+echo "-----> Copying .cabal to cache"
 rm -rf $CACHE_DIR/cabal
 cp -R .cabal $CACHE_DIR/cabal
