@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if test -n "$(find "$1" -maxdepth 1 -name '*.cabal' -print -quit)"
-then echo Haskell
-else echo no; exit 1
+then echo Haskell; exit 0
+else exit 1
 fi
