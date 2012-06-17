@@ -7,12 +7,18 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-cd $BUILD_DIR
-
 mkdir -p $CACHE_DIR
 
-cp -R $CACHE_DIR/ghc ghc &> /dev/null || true
-cp -R $CACHE_DIR/cabal .cabal &> /dev/null || true
+cd $BUILD_DIR
+echo "build dir:"
+ls -alR $BUILD_DIR
+
+echo "cache dir:"
+ls -alR $CACHE_DIR
+
+
+cp -R $CACHE_DIR/ghc ghc  || true
+cp -R $CACHE_DIR/cabal .cabal || true
 
 if [ ! -e ghc ]; then
   GHC_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/ghc.tar.gz"
