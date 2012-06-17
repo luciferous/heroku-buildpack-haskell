@@ -51,7 +51,7 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 # references to /app/ghc/*
 
 ghc/bin/ghc-pkg describe base > base.conf
-sed -i "s#ld-options:#ld-options: -L`pwd`/lib#"
+sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
