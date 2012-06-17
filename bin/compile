@@ -33,6 +33,10 @@ if [ ! -e .cabal ]; then
 fi
 pwd
 mkdir -p bin
+echo "what do we have?"
+ls -R ghc
+ls -R .cabal
+
 ln -s ghc/bin/ghc bin/ghc
 ln -s .cabal/bin/cabal bin/cabal
 
