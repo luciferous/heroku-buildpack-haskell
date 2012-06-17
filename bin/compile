@@ -50,12 +50,15 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 # this is actually a shell script with a bunch of hardcoded
 # references to /app/ghc/*
 
+echo "setting up ghc-pkg"
 ghc/bin/ghc-pkg describe base > base.conf
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
+echo "updating cabal"
 .cabal/bin/cabal update
+echo "release the hounds! Installing the app"
 .cabal/bin/cabal install
 
 rm -rf $CACHE_DIR/ghc
