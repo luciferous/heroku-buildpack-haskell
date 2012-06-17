@@ -34,14 +34,21 @@ fi
 pwd
 mkdir -p bin
 echo "what do we have?"
-ls -R ghc
+pwd
+ls -R ghc/bin
 ls -R .cabal
 
 ln -s ghc/bin/ghc bin/ghc
 ln -s .cabal/bin/cabal bin/cabal
 
+cp -R ghc $CACHE_DIR/ghc
+cp -R ghc /app
+
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
+
+# this is actually a shell script with a bunch of hardcoded
+# references to /app/ghc/*
 
 ghc/bin/ghc-pkg describe base > base.conf
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#"
@@ -52,7 +59,10 @@ rm base.conf
 .cabal/bin/cabal install
 
 rm -rf $CACHE_DIR/ghc
-cp -R ghc $CACHE_DIR/ghc
+
+
+
+
 
 rm -rf $CACHE_DIR/cabal
 cp -R .cabal $CACHE_DIR/cabal
