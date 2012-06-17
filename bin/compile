@@ -56,15 +56,11 @@ sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
+export PATH=/app/ghc/bin:$PATH
 echo "updating cabal"
 .cabal/bin/cabal update
 echo "release the hounds! Installing the app"
 .cabal/bin/cabal install
-
-rm -rf $CACHE_DIR/ghc
-
-
-
 
 
 rm -rf $CACHE_DIR/cabal
