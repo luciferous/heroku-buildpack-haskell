@@ -65,3 +65,15 @@ echo "release the hounds! Installing the app"
 
 rm -rf $CACHE_DIR/cabal
 cp -R .cabal $CACHE_DIR/cabal
+
+
+echo "Cachedir:"
+du -ms $CACHE_DIR
+
+echo "builddir:"
+du -m $BUILD_DIR
+
+echo "home"
+du -m /app
+
+rm -rf $CACHE_DIR $BUILD_DIR
