@@ -68,12 +68,11 @@ cp -R .cabal $CACHE_DIR/cabal
 
 
 echo "Cachedir:"
-du -ms $CACHE_DIR
+du -ms $CACHE_DIR | sort -n | tail -50
 
 echo "builddir:"
-du -m $BUILD_DIR
+du -m $BUILD_DIR | sort -n |tail -50
 
 echo "home"
-du -m /app
-
-rm -rf $CACHE_DIR $BUILD_DIR
+du -m /app |sort -n |tail -50
+rm -rf $CACHE_DIR $BUILD_DIR /app/ghc
