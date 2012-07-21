@@ -69,7 +69,7 @@ cp -R .cabal $CACHE_DIR/cabal
 
 
 # need to delete everything we don't need
-rm -rf $BUILD_DIR/.cabal $BUILD_DIR/.ghc
+rm -rf $BUILD_DIR/.cabal $BUILD_DIR/ghc
 
 echo "Cachedir:"
 du -ms $CACHE_DIR | sort -n | tail -50
