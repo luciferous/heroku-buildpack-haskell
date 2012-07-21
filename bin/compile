@@ -17,8 +17,8 @@ echo "cache dir:"
 ls -alR $CACHE_DIR
 
 
-cp -R $CACHE_DIR/ghc ghc  || true
-cp -R $CACHE_DIR/cabal .cabal || true
+#cp -R $CACHE_DIR/ghc ghc  || true
+#cp -R $CACHE_DIR/cabal .cabal || true
 
 if [ ! -e ghc ]; then
   GHC_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/ghc.tar.gz"
@@ -33,16 +33,12 @@ if [ ! -e .cabal ]; then
 fi
 pwd
 mkdir -p bin
-echo "what do we have?"
-pwd
-ls -R ghc/bin
-ls -R .cabal
 
 ln -s ghc/bin/ghc bin/ghc
 ln -s .cabal/bin/cabal bin/cabal
 
-cp -R ghc $CACHE_DIR/ghc
-cp -R ghc /app
+# cp -R ghc $CACHE_DIR/ghc
+# cp -R ghc /app
 
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
@@ -56,31 +52,36 @@ sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
-export PATH=/app/ghc/bin:$PATH
+# export PATH=/app/ghc/bin:$PATH
+export PATH=`pwd`/ghc/bin:$PATH
 echo "updating cabal"
 .cabal/bin/cabal update
 echo "release the hounds! Installing the app"
 .cabal/bin/cabal install
-cp /app/.cabal/bin/* $BUILD_DIR
+cp .cabal/bin/* $BUILD_DIR
 
 
-rm -rf $CACHE_DIR/cabal
-cp -R .cabal $CACHE_DIR/cabal
+# rm -rf $CACHE_DIR/cabal
+# cp -R .cabal $CACHE_DIR/cabal
 
 
 # need to delete everything we don't need
 rm -rf $BUILD_DIR/.cabal $BUILD_DIR/ghc
 
 echo "Cachedir:"
-du -ms $CACHE_DIR | sort -n | tail -50
+du -ms $CACHE_DIR | sort -n | tail -10
 
 echo "builddir:"
-du -m $BUILD_DIR | sort -n |tail -50
+du -m $BUILD_DIR | sort -n |tail -10
 
 echo "home"
-du -m /app |sort -n |tail -50
-rm -rf $CACHE_DIR /app/ghc
-ls -al /app/.cabal
+du -m /app |sort -n |tail -10
+# rm -rf $CACHE_DIR /app/ghc
+# ls -al /app/.cabal
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
+
+# quick hack
+./bc_twitter
 return 0
+
