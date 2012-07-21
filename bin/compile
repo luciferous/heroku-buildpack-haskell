@@ -38,7 +38,7 @@ ln -s ghc/bin/ghc bin/ghc
 ln -s .cabal/bin/cabal bin/cabal
 
 # cp -R ghc $CACHE_DIR/ghc
-# cp -R ghc /app
+ln -s ghc /app/ghc 
 
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
