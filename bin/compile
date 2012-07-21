@@ -76,7 +76,8 @@ du -m $BUILD_DIR | sort -n |tail -50
 echo "home"
 du -m /app |sort -n |tail -50
 rm -rf $CACHE_DIR /app/ghc
-ls -al /app/cabal
-du -ms $CACHE_DIR $BUILD_DIR .
-du -ms /app
+ls -al /app/.cabal
+cp /app/.cabal/bin/* $BUILD_DIR
+ls $BUILD_DIR
+du -ms $CACHE_DIR $BUILD_DIR . 
 return 0
