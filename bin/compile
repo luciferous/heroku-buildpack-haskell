@@ -38,13 +38,20 @@ ln -s ghc/bin/ghc bin/ghc
 ln -s .cabal/bin/cabal bin/cabal
 
 # cp -R ghc $CACHE_DIR/ghc
-ln -s ghc /app/ghc 
+# ln -s ghc /app/ghc 
 
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
 # this is actually a shell script with a bunch of hardcoded
 # references to /app/ghc/*
+#
+# let's murder it to death.
+
+find ghc/bin -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$BUILD_DIR}g"
+
+sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
+
 
 echo "setting up ghc-pkg"
 ghc/bin/ghc-pkg describe base > base.conf
