@@ -77,3 +77,4 @@ echo "home"
 du -m /app |sort -n |tail -50
 rm -rf $CACHE_DIR $BUILD_DIR /app/ghc
 du -ms $CACHE_DIR $BUILD_DIR .
+return 0
