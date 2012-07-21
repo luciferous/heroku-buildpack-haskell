@@ -59,6 +59,10 @@ echo "before"
 cat base.conf
 
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
+echo "mid-surgery"
+cat base.conf
+
+perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g" base.conf
 echo "after"
 cat base.conf
 ghc/bin/ghc-pkg update base.conf
