@@ -48,7 +48,7 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 #
 # let's murder it to death.
 
-find ghc/bin -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$BUILD_DIR}g"
+find ghc/bin -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g"
 
 
 echo "setting up ghc-pkg"
