@@ -51,8 +51,6 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g"
 
 
-ls -alR ghc
-
 echo "setting up ghc-pkg"
 ghc/bin/ghc-pkg describe base > base.conf
 echo "before"
@@ -66,15 +64,19 @@ perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g" base.conf
 echo "after"
 cat base.conf
 ghc/bin/ghc-pkg update base.conf
-ghc/bin/ghc-pkg check
 rm base.conf
+
+ghc/bin/ghc-pkg recache
+ghc/bin/ghc-pkg check
 
 # export PATH=/app/ghc/bin:$PATH
 export PATH=`pwd`/ghc/bin:$PATH
 echo "updating cabal"
 .cabal/bin/cabal update
 echo "release the hounds! Installing the app"
-.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
+# the ld library path hack is horrible, but let's see if it helps
+
+LD_LIBRARY_PATH=`pwd`/lib .cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
 cp .cabal/bin/* $BUILD_DIR
 
 
@@ -98,7 +100,5 @@ du -m /app |sort -n |tail -10
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
 
-# quick hack
-./bc_twitter
 return 0
 
