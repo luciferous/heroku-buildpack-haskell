@@ -66,6 +66,7 @@ perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g" base.conf
 echo "after"
 cat base.conf
 ghc/bin/ghc-pkg update base.conf
+ghc-pkg check
 rm base.conf
 
 # export PATH=/app/ghc/bin:$PATH
@@ -73,7 +74,7 @@ export PATH=`pwd`/ghc/bin:$PATH
 echo "updating cabal"
 .cabal/bin/cabal update
 echo "release the hounds! Installing the app"
-.cabal/bin/cabal install
+.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
 cp .cabal/bin/* $BUILD_DIR
 
 
