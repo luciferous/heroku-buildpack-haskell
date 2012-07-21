@@ -102,5 +102,3 @@ du -m /app |sort -n |tail -10
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
 
-return 0
-
