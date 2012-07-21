@@ -61,11 +61,15 @@ echo "updating cabal"
 .cabal/bin/cabal update
 echo "release the hounds! Installing the app"
 .cabal/bin/cabal install
+cp /app/.cabal/bin/* $BUILD_DIR
 
 
 rm -rf $CACHE_DIR/cabal
 cp -R .cabal $CACHE_DIR/cabal
 
+
+# need to delete everything we don't need
+rm -rf $BUILD_DIR/.cabal $BUILD_DIR/.ghc
 
 echo "Cachedir:"
 du -ms $CACHE_DIR | sort -n | tail -50
@@ -77,7 +81,6 @@ echo "home"
 du -m /app |sort -n |tail -50
 rm -rf $CACHE_DIR /app/ghc
 ls -al /app/.cabal
-cp /app/.cabal/bin/* $BUILD_DIR
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
 return 0
