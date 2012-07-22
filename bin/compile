@@ -79,7 +79,9 @@ echo "release the hounds! Installing the app"
 # the ld library path hack is horrible, but let's see if it helps
 
 LD_LIBRARY_PATH=`pwd`/lib .cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
-cp .cabal/bin/* $BUILD_DIR
+echo "copying to build directory"
+ls /app/.cabal
+cp /app/.cabal/bin/* $BUILD_DIR
 
 
 # rm -rf $CACHE_DIR/cabal
@@ -102,4 +104,4 @@ du -m /app |sort -n |tail -10
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
 
-./bc_twitter healthcheck
+$BUILD_DIR/bc_twitter healthcheck
