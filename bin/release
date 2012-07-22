@@ -5,5 +5,5 @@ $BUILD_DIR=$1
 cat <<EOF
 ---
 config_vars:
-  OLDPATH: $BUILD_DIR/.cabal/bin:$BUILD_DIR/bin:/usr/local/bin:/usr/bin:/bin
+  PATH: $BUILD_DIR:$BUILD_DIR/.cabal/bin:$BUILD_DIR/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 EOF
