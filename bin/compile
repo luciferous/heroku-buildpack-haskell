@@ -55,11 +55,11 @@ ghc/bin/ghc-pkg check
 export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
 
 echo "updating cabal"
-~/.cabal/bin/cabal update
+cabal update
 
 echo "release the hounds! Installing the app"
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=`pwd`/lib cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=`pwd`/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "copying to build directory"
 cp ~/.cabal/bin/* $BUILD_DIR
