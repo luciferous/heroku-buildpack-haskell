@@ -25,12 +25,12 @@ fi
 if [ ! -e .cabal ]; then
   CABAL_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/cabal.tar.gz"
   echo "-----> Bundling Cabal"
-  curl -# --max-time 120 -L "$CABAL_URL" | tar xz
+  curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 mkdir -p bin
 
 ln -s ghc/bin/ghc bin/ghc
-ln -s .cabal/bin/cabal bin/cabal
+ln -s ~/.cabal/bin/cabal bin/cabal
 
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
@@ -58,17 +58,17 @@ ghc/bin/ghc-pkg check
 
 export PATH=`pwd`/ghc/bin:$PATH
 echo "updating cabal"
-.cabal/bin/cabal update
+~/.cabal/bin/cabal update
 echo "release the hounds! Installing the app"
 # the ld library path hack is horrible, but let's see if it helps
 
-LD_LIBRARY_PATH=`pwd`/lib .cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=`pwd`/lib ~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared
 echo "copying to build directory"
 ls /app/.cabal
 cp /app/.cabal/bin/* $BUILD_DIR
 
 # need to delete everything we don't need
-rm -rf $BUILD_DIR/.cabal $BUILD_DIR/ghc
+rm -rf ~/.cabal $BUILD_DIR/ghc
 
 echo "Cachedir:"
 du -ms $CACHE_DIR | sort -n | tail -10
