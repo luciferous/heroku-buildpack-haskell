@@ -35,29 +35,27 @@ ln -s .cabal/bin/cabal bin/cabal
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
-ls -lR ghc
+# this is actually a shell script with a bunch of hardcoded
+# references to /home/vagrant/ghc/*
+#
+# let's murder it to death.
+
+find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g"
+
 
 echo "setting up ghc-pkg"
 ghc/bin/ghc-pkg recache
 echo "recached"
 ghc/bin/ghc-pkg describe base > base.conf
-echo "before"
-cat base.conf
 
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
-echo "mid-surgery"
-cat base.conf
-
-perl -i -p -e  "s{/app/ghc}{$BUILD_DIR/ghc}g" base.conf
-echo "after"
-cat base.conf
+perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g" base.conf
 ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
 ghc/bin/ghc-pkg recache
 ghc/bin/ghc-pkg check
 
-# export PATH=/app/ghc/bin:$PATH
 export PATH=`pwd`/ghc/bin:$PATH
 echo "updating cabal"
 .cabal/bin/cabal update
