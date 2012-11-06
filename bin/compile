@@ -8,13 +8,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 
 mkdir -p $CACHE_DIR
-
 cd $BUILD_DIR
-echo "build dir:"
-ls -alR $BUILD_DIR
-
-echo "cache dir:"
-ls -alR $CACHE_DIR
 
 if [ ! -e ghc ]; then
   GHC_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/ghc.tar.gz"
@@ -38,21 +32,20 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
 find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g"
 
+export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
 
 echo "setting up ghc-pkg"
-ghc/bin/ghc-pkg recache
+ghc-pkg recache
 echo "recached"
-ghc/bin/ghc-pkg describe base > base.conf
+ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g" base.conf
-ghc/bin/ghc-pkg update base.conf
+ghc-pkg update base.conf
 rm base.conf
 
-ghc/bin/ghc-pkg recache
-ghc/bin/ghc-pkg check
-
-export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
+ghc-pkg recache
+ghc-pkg check
 
 echo "updating cabal"
 cabal update

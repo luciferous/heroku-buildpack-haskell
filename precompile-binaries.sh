@@ -41,28 +41,30 @@ rm -rf $HOME/ghc/share
 # Strip binaries
 strip --strip-unneeded $HOME/ghc/lib/ghc-7.4.1/{run,}ghc
 
-# ldconfig for linker hack
-$HOME/ghc/bin/ghc-pkg describe base > base.package.conf
-sed -i "s/ld-options:/ld-options:\ -L\/app\/usr\/lib/" base.package.conf
-$HOME/ghc/bin/ghc-pkg update base.package.conf
-
 export PATH=$PATH:$HOME/ghc/bin
 
+# ldconfig for linker hack
+ghc-pkg describe base > base.package.conf
+sed -i "s/ld-options:/ld-options:\ -L\/app\/usr\/lib/" base.package.conf
+ghc-pkg update base.package.conf
+
 # cabal-install
-curl --silent http://www.haskell.org/cabal/release/cabal-install-0.14.0/cabal-install-0.14.0.tar.gz|tar xz
-cd cabal-install-0.14.0/
+curl --silent http://hackage.haskell.org/packages/archive/cabal-install/1.16.0.1/cabal-install-1.16.0.1.tar.gz|tar xz
+cd cabal-install-1.16.0.1/
 sh bootstrap.sh
 cd ..
 
+export PATH=$PATH:$HOME/.cabal
+
 # Precompile some Yesod libs that take a while on Heroku
-~/.cabal/bin/cabal update
-~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared text-0.11.2.3
-~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared parsec-3.1.3
-~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared network-2.4.0.1
-~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared vector-0.10.0.1
-~/.cabal/bin/cabal install --disable-library-profiling --disable-executable-profiling --disable-shared aeson-0.6.0.2
-find ~/.cabal -name "*HS*.o" -delete
-rm -rf ~/.cabal/{config,share,packages,logs}
+cabal update
+cabal install --disable-library-profiling --disable-executable-profiling --disable-shared text-0.11.2.3
+cabal install --disable-library-profiling --disable-executable-profiling --disable-shared parsec-3.1.3
+cabal install --disable-library-profiling --disable-executable-profiling --disable-shared network-2.4.0.1
+cabal install --disable-library-profiling --disable-executable-profiling --disable-shared vector-0.10.0.1
+cabal install --disable-library-profiling --disable-executable-profiling --disable-shared aeson-0.6.0.2
+find $HOME/.cabal -name "*HS*.o" -delete
+rm -rf $HOME/.cabal/{config,share,packages,logs}
 
 tar cvzf ghc.tar.gz ghc
 tar cvzf cabal.tar.gz .cabal
