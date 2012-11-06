@@ -16,18 +16,14 @@ ls -alR $BUILD_DIR
 echo "cache dir:"
 ls -alR $CACHE_DIR
 
-
-#cp -R $CACHE_DIR/ghc ghc  || true
-#cp -R $CACHE_DIR/cabal .cabal || true
-
 if [ ! -e ghc ]; then
-  GHC_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/ghc.tar.gz"
+  GHC_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/ghc.tar.gz"
   echo "-----> Downloading GHC"
   curl -# --max-time 120 -L "$GHC_URL" | tar xz
 fi
 
 if [ ! -e .cabal ]; then
-  CABAL_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/cabal.tar.gz"
+  CABAL_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/cabal.tar.gz"
   echo "-----> Bundling Cabal"
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz
 fi
@@ -83,11 +79,6 @@ echo "copying to build directory"
 ls /app/.cabal
 cp /app/.cabal/bin/* $BUILD_DIR
 
-
-# rm -rf $CACHE_DIR/cabal
-# cp -R .cabal $CACHE_DIR/cabal
-
-
 # need to delete everything we don't need
 rm -rf $BUILD_DIR/.cabal $BUILD_DIR/ghc
 
@@ -99,9 +90,5 @@ du -m $BUILD_DIR | sort -n |tail -10
 
 echo "home"
 du -m /app |sort -n |tail -10
-# rm -rf $CACHE_DIR /app/ghc
-# ls -al /app/.cabal
 ls $BUILD_DIR
 du -ms $CACHE_DIR $BUILD_DIR . 
-
-$BUILD_DIR/bc_twitter healthcheck
