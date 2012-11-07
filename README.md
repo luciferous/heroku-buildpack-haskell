@@ -1,21 +1,34 @@
-# Heroku buildpack: Haskell (WIP)
-
-This is a work in progress, it does not currently work: size restrictions on heroku are making it difficult.
+# Heroku Buildpack: Haskell
 
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
-for Haskell apps. It uses cabal-1.14.0. 
+for Haskell apps. It uses cabal-1.16.0.1.
+
+## Demo
+
+A demo is online here:
+
+http://haskell-buildpack-demo.herokuapp.com/
+
+The demo repo is here:
+
+https://github.com/pufuwozu/haskell-buildpack-demo
 
 ## Usage
 
     $ ls
     Procfile app.cabal src
 
-    $ heroku create --stack=cedar --buildpack https://github.com/luciferous/heroku-buildpack-haskell.git
+    $ heroku create --stack=cedar --buildpack https://github.com/pufuwozu/heroku-buildpack-haskell.git
 
     $ git push heroku master
     ...
-    -----> Heroku receiving push
-    -----> Haskell app detected
-    -----> Building app with cabal
-    -----> Running: cabal install
 
+    -----> Heroku receiving push
+    -----> Fetching custom git buildpack... done
+    -----> Haskell app detected
+    -----> Downloading GHC
+    ######################################################################## 100.0%
+    -----> Downloading Cabal
+    ######################################################################## 100.0%
+    -----> Setting up ghc-pkg
+    ...
