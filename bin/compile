@@ -32,20 +32,23 @@ ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
 find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g"
 
-export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
+# Can't use ghc-pkg in that PATH
 
 echo "setting up ghc-pkg"
-ghc-pkg recache
+ghc/bin/ghc-pkg recache
 echo "recached"
-ghc-pkg describe base > base.conf
+ghc/bin/ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g" base.conf
-ghc-pkg update base.conf
+ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
-ghc-pkg recache
-ghc-pkg check
+ghc/bin/ghc-pkg recache
+ghc/bin/ghc-pkg recache --user
+ghc/bin/ghc-pkg check
+
+export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
 
 echo "updating cabal"
 cabal update
