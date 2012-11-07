@@ -1,7 +1,7 @@
 # Heroku Buildpack: Haskell
 
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
-for Haskell apps. It uses cabal-1.16.0.1.
+for Haskell apps. It uses GHC 7.4.1 and cabal-1.16.0.1.
 
 ## Demo
 
