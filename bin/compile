@@ -26,7 +26,7 @@ elif [ ! -e $HOME/.cabal ]; then
 fi
 
 mkdir -p $CACHE_DIR/lib
-ln -s /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
+ln -s /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so || true
 
 # GHC has shell scripts with a bunch of hardcoded references to
 # /home/vagrant/ghc/*
