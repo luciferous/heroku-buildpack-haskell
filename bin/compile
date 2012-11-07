@@ -7,41 +7,41 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-cd $BUILD_DIR
+mkdir -p $CACHE_DIR
 
-if [ ! -e ghc ]; then
+if [ ! -e $CACHE_DIR/ghc ]; then
   GHC_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/ghc.tar.gz"
   echo "-----> Downloading GHC"
-  curl -# --max-time 120 -L "$GHC_URL" | tar xz
+  curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
 
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
   rm -rf $HOME/.cabal
   mv $CACHE_DIR/cabal $HOME/.cabal
-elif [ ! -e .cabal ]; then
+elif [ ! -e $HOME/.cabal ]; then
   CABAL_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/cabal.tar.gz"
   echo "-----> Downloading Cabal"
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 
-mkdir -p lib
-ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
+mkdir -p $CACHE_DIR/lib
+ln -s /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 
 # GHC has shell scripts with a bunch of hardcoded references to
 # /home/vagrant/ghc/*
 #
 # Let's murder it to death.
-find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g"
+find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g"
 
-PATH=$BUILD_DIR/ghc/bin:$PATH
+PATH=$CACHE_DIR/ghc/bin:$PATH
 
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
 ghc-pkg describe base > base.conf
 
-sed -i "s#ld-options:#ld-options: -L$BUILD_DIR/lib#" base.conf
-perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g" base.conf
+sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
+perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
 ghc-pkg update base.conf
 rm base.conf
 
@@ -55,11 +55,11 @@ echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Release the hounds! Installing application"
+cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=$BUILD_DIR/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
 rm $HOME/.cabal/bin/!(cabal|happy)
-mkdir -p $CACHE_DIR
 mv $HOME/.cabal $CACHE_DIR/cabal
