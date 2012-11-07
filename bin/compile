@@ -15,6 +15,12 @@ if [ ! -e $CACHE_DIR/ghc ]; then
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
 
+# Restore GHC registry if available
+if [ -e $CACHE_DIR/dotghc ]; then
+  rm -rf $HOME/.ghc
+  mv $CACHE_DIR/dotghc $HOME/.ghc
+fi
+
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
   rm -rf $HOME/.cabal
@@ -46,7 +52,6 @@ ghc-pkg update base.conf
 rm base.conf
 
 ghc-pkg recache
-ghc-pkg recache --user
 ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
@@ -63,6 +68,7 @@ echo "-----> Caching Cabal packages"
 shopt -s extglob
 rm $HOME/.cabal/bin/!(cabal|happy)
 mv $HOME/.cabal $CACHE_DIR/cabal
+mv $HOME/.ghc $CACHE_DIR/dotghc
 
 echo "Cache dir size:"
 du -ms $CACHE_DIR
