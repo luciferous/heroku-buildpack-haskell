@@ -63,3 +63,8 @@ echo "-----> Caching Cabal packages"
 shopt -s extglob
 rm $HOME/.cabal/bin/!(cabal|happy)
 mv $HOME/.cabal $CACHE_DIR/cabal
+
+echo "Cache dir size:"
+du -ms $CACHE_DIR
+echo "Build dir size:"
+du -ms $BUILD_DIR
