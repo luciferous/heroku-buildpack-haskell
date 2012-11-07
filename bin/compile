@@ -7,7 +7,6 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-mkdir -p $CACHE_DIR
 cd $BUILD_DIR
 
 if [ ! -e ghc ]; then
@@ -16,60 +15,51 @@ if [ ! -e ghc ]; then
   curl -# --max-time 120 -L "$GHC_URL" | tar xz
 fi
 
-if [ ! -e .cabal ]; then
+# Restore Cabal cache or download an empty environemt
+if [ -e $CACHE_DIR/cabal ]; then
+  rm -rf $HOME/.cabal
+  mv $CACHE_DIR/cabal $HOME/.cabal
+elif [ ! -e .cabal ]; then
   CABAL_URL="http://brianmckenna.org/files/heroku-buildpack-haskell/cabal.tar.gz"
-  echo "-----> Bundling Cabal"
+  echo "-----> Downloading Cabal"
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 
 mkdir -p lib
 ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
 
-# this is actually a shell script with a bunch of hardcoded
-# references to /home/vagrant/ghc/*
+# GHC has shell scripts with a bunch of hardcoded references to
+# /home/vagrant/ghc/*
 #
-# let's murder it to death.
-
+# Let's murder it to death.
 find ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g"
 
-# Can't use ghc-pkg in that PATH
+PATH=$BUILD_DIR/ghc/bin:$PATH
 
-echo "setting up ghc-pkg"
-ghc/bin/ghc-pkg recache
-echo "recached"
-ghc/bin/ghc-pkg describe base > base.conf
+echo "-----> Setting up ghc-pkg"
+ghc-pkg recache
+ghc-pkg describe base > base.conf
 
-sed -i "s#ld-options:#ld-options: -L`pwd`/lib#" base.conf
+sed -i "s#ld-options:#ld-options: -L$BUILD_DIR/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$BUILD_DIR/ghc}g" base.conf
-ghc/bin/ghc-pkg update base.conf
+ghc-pkg update base.conf
 rm base.conf
 
-ghc/bin/ghc-pkg recache
-ghc/bin/ghc-pkg recache --user
-ghc/bin/ghc-pkg check
+ghc-pkg recache
+ghc-pkg recache --user
+ghc-pkg check
 
-export PATH=`pwd`/ghc/bin:~/.cabal/bin:$PATH
+export PATH=$HOME/.cabal/bin:$PATH
 
-echo "updating cabal"
+echo "-----> Updating Cabal"
 cabal update
 
-echo "release the hounds! Installing the app"
+echo "-----> Release the hounds! Installing application"
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=`pwd`/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=$BUILD_DIR/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
-echo "copying to build directory"
-cp ~/.cabal/bin/* $BUILD_DIR
-
-# need to delete everything we don't need
-rm -rf ~/.cabal $BUILD_DIR/ghc
-
-echo "Cachedir:"
-du -ms $CACHE_DIR | sort -n | tail -10
-
-echo "builddir:"
-du -m $BUILD_DIR | sort -n |tail -10
-
-echo "home"
-du -m /app |sort -n |tail -10
-ls $BUILD_DIR
-du -ms $CACHE_DIR $BUILD_DIR . 
+echo "-----> Caching Cabal packages"
+shopt -s extglob
+rm $HOME/.cabal/bin/!(cabal|happy)
+mkdir -p $CACHE_DIR
+mv $HOME/.cabal $CACHE_DIR/cabal

@@ -56,13 +56,9 @@ cd ..
 
 export PATH=$PATH:$HOME/.cabal
 
-# Precompile some Yesod libs that take a while on Heroku
+# Install a binary that Yesod needs separately
 cabal update
-cabal install --disable-library-profiling --disable-executable-profiling --disable-shared text-0.11.2.3
-cabal install --disable-library-profiling --disable-executable-profiling --disable-shared parsec-3.1.3
-cabal install --disable-library-profiling --disable-executable-profiling --disable-shared network-2.4.0.1
-cabal install --disable-library-profiling --disable-executable-profiling --disable-shared vector-0.10.0.1
-cabal install --disable-library-profiling --disable-executable-profiling --disable-shared aeson-0.6.0.2
+cabal install happy
 find $HOME/.cabal -name "*HS*.o" -delete
 rm -rf $HOME/.cabal/{config,share,packages,logs}
 
