@@ -62,7 +62,7 @@ cabal update
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install -v2 -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install --verbose -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
