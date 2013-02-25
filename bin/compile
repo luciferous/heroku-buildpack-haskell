@@ -59,6 +59,9 @@ export PATH=$HOME/.cabal/bin:$PATH
 echo "-----> Updating Cabal"
 cabal update
 
+echo "-----> Check pkg-list"
+ghc-pkg list
+
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
