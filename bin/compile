@@ -60,7 +60,7 @@ echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Check pkg-list"
-ghc-pkg list
+ghc-pkg list ghc
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
