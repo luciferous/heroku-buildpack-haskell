@@ -60,7 +60,7 @@ echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Check OS:"
-lsb_release -a
+uname -a
 
 echo "-----> Check pkg-list"
 ghc-pkg list ghc
