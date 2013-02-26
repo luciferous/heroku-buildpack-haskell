@@ -60,7 +60,7 @@ echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Check OS:"
-uname -a
+cat /proc/version
 
 echo "-----> Check pkg-list"
 ghc-pkg list ghc
