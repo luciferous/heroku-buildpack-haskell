@@ -61,6 +61,7 @@ cabal update
 
 echo "-----> Check OS:"
 cat /proc/version
+cat /etc/*-release
 
 echo "-----> Check pkg-list"
 ghc-pkg list ghc
