@@ -42,41 +42,41 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
-CONF="name: hpc\n
-version: 0.5.1.1\n
-id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956\n
-license: BSD3\n
-copyright:\n
-maintainer: libraries@haskell.org\n
-stability:\n
-homepage:\n
-package-url:\n
-synopsis: Code Coverage Library for Haskell\n
-description:\n
-category: Control\n
-author: Andy Gill\n
-exposed: True\n
+CONF="name: hpc
+version: 0.5.1.1
+id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956
+license: BSD3
+copyright:
+maintainer: libraries@haskell.org
+stability:
+homepage:
+package-url:
+synopsis: Code Coverage Library for Haskell
+description:
+category: Control
+author: Andy Gill
+exposed: True
 exposed-modules: Trace.Hpc.Util Trace.Hpc.Mix Trace.Hpc.Tix
-                 Trace.Hpc.Reflect\n
-hidden-modules:\n
-trusted: False\n
-import-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1\n
-library-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1\n
-hs-libraries: HShpc-0.5.1.1\n
-extra-libraries:\n
-extra-ghci-libraries:\n
-include-dirs:\n
-includes:\n
+                 Trace.Hpc.Reflect
+hidden-modules:
+trusted: False
+import-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1
+library-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1
+hs-libraries: HShpc-0.5.1.1
+extra-libraries:
+extra-ghci-libraries:
+include-dirs:
+includes:
 depends: base-4.5.1.0-81d626fb996bc7e140a3fd4481b338cd
          containers-0.4.2.1-75f143aa39a3e77a1ce2300025bdd8ce
          directory-1.1.0.2-72e928d14fc50f31f7e6404839a15691
-         old-time-1.1.0.0-b8e05d63ad4954b34fe6dc2bcdddfd5d\n
-hugs-options:\n
-cc-options:\n
-ld-options:\n
-framework-dirs:\n
-frameworks:\n
-haddock-interfaces: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1/hpc.haddock\n
+         old-time-1.1.0.0-b8e05d63ad4954b34fe6dc2bcdddfd5d
+hugs-options:
+cc-options:
+ld-options:
+framework-dirs:
+frameworks:
+haddock-interfaces: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1/hpc.haddock
 haddock-html: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1"
 
 echo $CONF > $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
