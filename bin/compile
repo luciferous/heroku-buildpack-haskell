@@ -54,6 +54,9 @@ rm base.conf
 ghc-pkg recache
 ghc-pkg check
 
+echo "-----> Check pkg-list"
+ghc-pkg list
+
 # haskell-platform
 echo "-----> Download and install Haskell Platform"
 curl -# http://lambda.haskell.org/platform/download/2012.2.0.0/haskell-platform-2012.2.0.0.tar.gz | tar xz
@@ -67,9 +70,6 @@ export PATH=$HOME/.cabal/bin:$PATH
 
 echo "-----> Updating Cabal"
 cabal update
-
-echo "-----> Check pkg-list"
-ghc-pkg list
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
