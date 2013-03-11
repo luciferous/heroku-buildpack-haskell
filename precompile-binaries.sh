@@ -48,14 +48,6 @@ ghc-pkg describe base > base.package.conf
 sed -i "s/ld-options:/ld-options:\ -L\/app\/usr\/lib/" base.package.conf
 ghc-pkg update base.package.conf
 
-# haskell-platform
-curl --silent http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz|tar xz
-cd haskell-platform-2011.4.0.0
-./configure --prefix=$HOME/platform
-make
-make install
-cd ..
-
 # cabal-install
 curl --silent http://hackage.haskell.org/packages/archive/cabal-install/1.16.0.1/cabal-install-1.16.0.1.tar.gz|tar xz
 cd cabal-install-1.16.0.1/
