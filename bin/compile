@@ -42,44 +42,41 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
-CONF="name: hpc"
-# version: 0.5.1.1
-# id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956
-# license: BSD3
-# copyright:
-# maintainer: libraries@haskell.org
-# stability:
-# homepage:
-# package-url:
-# synopsis: Code Coverage Library for Haskell
-# description:
-# category: Control
-# author: Andy Gill
-# exposed: True
-# exposed-modules: Trace.Hpc.Util Trace.Hpc.Mix Trace.Hpc.Tix
-#                  Trace.Hpc.Reflect
-# hidden-modules:
-# trusted: False
-# import-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1
-# library-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1
-# hs-libraries: HShpc-0.5.1.1
-# extra-libraries:
-# extra-ghci-libraries:
-# include-dirs:
-# includes:
-# depends: base-4.5.1.0-81d626fb996bc7e140a3fd4481b338cd
-#          containers-0.4.2.1-75f143aa39a3e77a1ce2300025bdd8ce
-#          directory-1.1.0.2-72e928d14fc50f31f7e6404839a15691
-#          old-time-1.1.0.0-b8e05d63ad4954b34fe6dc2bcdddfd5d
-# hugs-options:
-# cc-options:
-# ld-options:
-# framework-dirs:
-# frameworks:
-# haddock-interfaces: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1/hpc.haddock
-# haddock-html: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1"
-
-echo $CONF > $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "name: hpc" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+eco "version: 0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "license: BSD3" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "copyright:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "maintainer: libraries@haskell.org" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "stability:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "homepage:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "package-url:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "synopsis: Code Coverage Library for Haskell" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "description:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "category: Control" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "author: Andy Gill" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "exposed: True" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "exposed-modules: Trace.Hpc.Util Trace.Hpc.Mix Trace.Hpc.Tix Trace.Hpc.Reflect" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "hidden-modules:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "trusted: False" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "import-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "library-dirs: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/lib/ghc-7.4.2/hpc-0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "hs-libraries: HShpc-0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "extra-libraries:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "extra-ghci-libraries:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "include-dirs:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "includes:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "depends: base-4.5.1.0-81d626fb996bc7e140a3fd4481b338cd
+          containers-0.4.2.1-75f143aa39a3e77a1ce2300025bdd8ce
+          directory-1.1.0.2-72e928d14fc50f31f7e6404839a15691
+          old-time-1.1.0.0-b8e05d63ad4954b34fe6dc2bcdddfd5d" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "hugs-options:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "cc-options:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "ld-options:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "framework-dirs:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "frameworks:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "haddock-interfaces: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1/hpc.haddock" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "haddock-html: /Library/Frameworks/GHC.framework/Versions/7.4.2-x86_64/usr/share/doc/ghc/html/libraries/hpc-0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
 
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
