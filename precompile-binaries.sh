@@ -18,9 +18,9 @@ rm $HOME/ghc/bin/haddock*
 rm $HOME/ghc/lib/ghc-7.4.1/haddock
 rm -r $HOME/ghc/lib/ghc-7.4.1/html
 rm -r $HOME/ghc/lib/ghc-7.4.1/latex
-rm $HOME/ghc/bin/hp*
-rm -r $HOME/ghc/lib/ghc-7.4.1/hp*
-rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-*
+# rm $HOME/ghc/bin/hp*
+# rm -r $HOME/ghc/lib/ghc-7.4.1/hp*
+# rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-*
 # rm -r $HOME/ghc/lib/ghc-7.4.1/ghc-7.4.1
 # rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/ghc-7.4.1-*
 # rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/package.cache
