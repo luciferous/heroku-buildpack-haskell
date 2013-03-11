@@ -42,7 +42,7 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
-CONF = $"name: hpc\n
+CONF="name: hpc\n
 version: 0.5.1.1\n
 id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956\n
 license: BSD3\n
