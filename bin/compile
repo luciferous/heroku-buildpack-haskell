@@ -25,7 +25,7 @@ fi
 echo "-----> Download and install Haskell Platform"
 curl -# http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz | tar xz
 cd haskell-platform-2011.4.0.0
-./configure
+./configure -with-ghc=$HOME/ghc/bin/ghc
 make
 make install
 cd ..
