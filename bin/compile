@@ -44,9 +44,9 @@ PATH=$CACHE_DIR/ghc/bin:$PATH
 
 # haskell-platform
 echo "-----> Download and install Haskell Platform"
-curl -# http://lambda.haskell.org/platform/download/2012.4.0.0/haskell-platform-2011.4.0.0.tar.gz | tar xz
+curl -# http://lambda.haskell.org/platform/download/2012.4.0.0/haskell-platform-2012.4.0.0.tar.gz | tar xz
 cd haskell-platform-2012.4.0.0
-./configure --with-ghc=$CACHE_DIR/ghc/bin/ghc
+./configure
 make
 make install
 cd ..
