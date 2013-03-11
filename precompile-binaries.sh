@@ -51,7 +51,7 @@ ghc-pkg update base.package.conf
 # haskell-platform
 curl --silent http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz|tar xz
 cd haskell-platform-2011.4.0.0
-./configure
+./configure --prefix=$HOME/platform
 make
 make install
 cd ..

@@ -21,6 +21,13 @@ if [ -e $CACHE_DIR/dotghc ]; then
   mv $CACHE_DIR/dotghc $HOME/.ghc
 fi
 
+# Download Haskell Platform
+if [ ! -e $HOME/.cabal ]; then
+  HP_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/platform.tar.gz"
+  echo "-----> Downloading Haskell Platfrom"
+  curl -# --max-time 120 -L "$HP_URL" | tar xz -C $HOME
+fi
+
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
   rm -rf $HOME/.cabal
