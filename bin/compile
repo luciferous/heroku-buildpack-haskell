@@ -9,17 +9,23 @@ CACHE_DIR=$2
 
 mkdir -p $CACHE_DIR
 
-if [ ! -e $CACHE_DIR/ghc ]; then
-  GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
-  echo "-----> Downloading GHC"
-  curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
-fi
+# if [ ! -e $CACHE_DIR/ghc ]; then
+#   GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
+#   echo "-----> Downloading GHC"
+#   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
+# fi
 
-# Restore GHC registry if available
-if [ -e $CACHE_DIR/dotghc ]; then
-  rm -rf $HOME/.ghc
-  mv $CACHE_DIR/dotghc $HOME/.ghc
-fi
+# # Restore GHC registry if available
+# if [ -e $CACHE_DIR/dotghc ]; then
+#   rm -rf $HOME/.ghc
+#   mv $CACHE_DIR/dotghc $HOME/.ghc
+# fi
+
+curl --silent http://www.haskell.org/ghc/dist/7.4.1/ghc-7.4.1-x86_64-unknown-linux.tar.bz2|tar xj
+cd ghc-7.4.1/
+./configure --prefix=$HOME/ghc --with-gmp-libraries=$HOME/usr/lib
+make install
+cd ..
 
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then

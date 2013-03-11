@@ -28,12 +28,12 @@ echo "" > $HOME/ghc/lib/ghc-7.4.1/ghc-usage.txt
 echo "" > $HOME/ghc/lib/ghc-7.4.1/ghci-usage.txt
 
 # Remove duplicate libs
-# find $HOME/ghc/lib -name "*_p.a" -delete
-# find $HOME/ghc/lib -name "*.p_hi" -delete
-# find $HOME/ghc/lib -name "*.dyn_hi" -delete
-# find $HOME/ghc/lib -name "*HS*.so" -delete
-# find $HOME/ghc/lib -name "*HS*.o" -delete
-# find $HOME/ghc/lib -name "*_debug.a" -delete
+find $HOME/ghc/lib -name "*_p.a" -delete
+find $HOME/ghc/lib -name "*.p_hi" -delete
+find $HOME/ghc/lib -name "*.dyn_hi" -delete
+find $HOME/ghc/lib -name "*HS*.so" -delete
+find $HOME/ghc/lib -name "*HS*.o" -delete
+find $HOME/ghc/lib -name "*_debug.a" -delete
 
 # Don't need man or doc
 rm -rf $HOME/ghc/share
