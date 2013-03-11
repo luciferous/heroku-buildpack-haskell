@@ -21,16 +21,6 @@ if [ -e $CACHE_DIR/dotghc ]; then
   mv $CACHE_DIR/dotghc $HOME/.ghc
 fi
 
-# haskell-platform
-echo "-----> Download and install Haskell Platform"
-curl -# http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz | tar xz
-cd haskell-platform-2011.4.0.0
-./configure --with-ghc=$HOME/ghc/bin/ghc
-make
-make install
-cd ..
-
-
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
   rm -rf $HOME/.cabal
@@ -51,6 +41,15 @@ ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g"
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
+
+# haskell-platform
+echo "-----> Download and install Haskell Platform"
+curl -# http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz | tar xz
+cd haskell-platform-2011.4.0.0
+./configure --with-ghc=$CACHE_DIR/ghc/bin/ghc
+make
+make install
+cd ..
 
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
