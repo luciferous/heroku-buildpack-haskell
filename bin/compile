@@ -43,7 +43,7 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
 echo "name: hpc" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
-eco "version: 0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
+echo "version: 0.5.1.1" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
 echo "id: hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
 echo "license: BSD3" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
 echo "copyright:" >> $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-aded85d3c95c51273fc3dedd3c91e956.conf
