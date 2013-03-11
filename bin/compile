@@ -59,17 +59,13 @@ export PATH=$HOME/.cabal/bin:$PATH
 echo "-----> Updating Cabal"
 cabal update
 
-echo "-----> Check OS:"
-cat /proc/version
-cat /etc/*-release
-
 echo "-----> Check pkg-list"
 ghc-pkg list ghc
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install -v3 -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
