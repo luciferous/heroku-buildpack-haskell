@@ -10,7 +10,7 @@ CACHE_DIR=$2
 mkdir -p $CACHE_DIR
 
 if [ ! -e $CACHE_DIR/ghc ]; then
-  GHC_URL="http://s3.amazonaws.com/comuniotest/ghc.tar.gz"
+  GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
   echo "-----> Downloading GHC"
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
