@@ -22,8 +22,8 @@ rm $HOME/ghc/bin/hp*
 rm -r $HOME/ghc/lib/ghc-7.4.1/hp*
 rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/hpc-0.5.1.1-*
 # rm -r $HOME/ghc/lib/ghc-7.4.1/ghc-7.4.1
-rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/ghc-7.4.1-*
-rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/package.cache
+# rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/ghc-7.4.1-*
+# rm -r $HOME/ghc/lib/ghc-7.4.1/package.conf.d/package.cache
 echo "" > $HOME/ghc/lib/ghc-7.4.1/ghc-usage.txt
 echo "" > $HOME/ghc/lib/ghc-7.4.1/ghci-usage.txt
 
@@ -47,6 +47,14 @@ export PATH=$PATH:$HOME/ghc/bin
 ghc-pkg describe base > base.package.conf
 sed -i "s/ld-options:/ld-options:\ -L\/app\/usr\/lib/" base.package.conf
 ghc-pkg update base.package.conf
+
+# haskell-platform
+curl --silent http://lambda.haskell.org/platform/download/2011.4.0.0/haskell-platform-2011.4.0.0.tar.gz|tar xz
+cd haskell-platform-2011.4.0.0
+./configure
+make
+make install
+cd ..
 
 # cabal-install
 curl --silent http://hackage.haskell.org/packages/archive/cabal-install/1.16.0.1/cabal-install-1.16.0.1.tar.gz|tar xz
