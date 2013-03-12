@@ -40,7 +40,7 @@ ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 # Let's murder it to death.
 find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g"
 
-export PATH=$CACHE_DIR/ghc/bin:$PATH
+export PATH=$CACHE_DIR/ghc/bin$PATH
 
 echo "-----> Checking ghc"
 echo $PATH
@@ -48,17 +48,17 @@ which ghc
 
 echo "-----> Setting up ghc-pkg"
 which ghc-pkg
-/app/tmp/repo.git/.cache/ghc/bin/ghc-pkg recache
+$CACHE_DIR/ghc-pkg recache
 # ghc-pkg recache
-ghc-pkg describe base > base.conf
+$CACHE_DIR/ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-ghc-pkg update base.conf
+$CACHE_DIR/ghc-pkg update base.conf
 rm base.conf
 
-ghc-pkg recache
-ghc-pkg check
+$CACHE_DIR/ghc-pkg recache
+$CACHE_DIR/ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
 
