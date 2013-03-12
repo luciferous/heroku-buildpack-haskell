@@ -53,7 +53,7 @@ export PATH=/app/ghc/bin$PATH
 
 echo "-----> Checking ghc-pkg"
 ghc-pkg check
-ghc-pkg list
+# ghc-pkg list
 
 export PATH=$HOME/.cabal/bin:$PATH
 
@@ -64,7 +64,7 @@ echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
 # LD_LIBRARY_PATH=/app/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
-cabal install -j5 -v3 --disable-library-profiling --disable-executable-profiling --disable-shared
+cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
