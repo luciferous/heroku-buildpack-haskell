@@ -15,6 +15,8 @@ if [ ! -e $CACHE_DIR/ghc ]; then
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
 
+find ghc
+
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
   rm -rf $HOME/.ghc
