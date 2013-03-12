@@ -61,11 +61,11 @@ $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg describe base --global-conf=$GHC_PACKAGE_PA
 
 # sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
 # perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg update base.conf --global-conf=$GHC_PACKAGE_PATH
+$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg update base.conf
 rm base.conf 
 
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg check --global-conf=$GHC_PACKAGE_PATH
+$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache
+$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
 
