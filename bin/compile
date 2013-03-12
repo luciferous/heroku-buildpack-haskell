@@ -24,7 +24,7 @@ if [ -e $CACHE_DIR/dotghc ]; then
 fi
 
 ls $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d
-rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
+rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package.cache
 
 
 # Restore Cabal cache or download an empty environemt
