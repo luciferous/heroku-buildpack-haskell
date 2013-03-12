@@ -23,7 +23,6 @@ if [ -e $CACHE_DIR/dotghc ]; then
   ls $HOME/.ghc
 else
   mv $CACHE_DIR/ghc $HOME
-  ls $HOME
 fi
 
 # Restore Cabal cache or download an empty environemt
@@ -89,7 +88,7 @@ cabal update
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=$CACHE_DIR/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+LD_LIBRARY_PATH=/app/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
