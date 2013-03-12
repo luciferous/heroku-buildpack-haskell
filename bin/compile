@@ -102,6 +102,7 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
 echo "-----> Setting up ghc-pkg"
+which ghc-pkg
 ghc-pkg recache
 ghc-pkg describe base > base.conf
 
