@@ -34,10 +34,10 @@ elif [ ! -e $HOME/.cabal ]; then
   echo "-----> Downloading Cabal"
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
-echo $LD_LIBRARY_PATH
 
 mkdir -p /app/usr/lib
 ln -s /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
+LD_LIBRARY_PATH=/usr/lib:/app/usr/lib
 
 # find $CACHE_DIR/ghc -type f -print0
 
