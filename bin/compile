@@ -22,7 +22,8 @@ if [ -e $CACHE_DIR/dotghc ]; then
   mv $CACHE_DIR/dotghc $HOME/.ghc
   ls $HOME/.ghc
 else
-  mv $CACHE_DIR $HOME
+  mv $CACHE_DIR/ghc $HOME
+  ls $HOME
 fi
 
 # Restore Cabal cache or download an empty environemt
