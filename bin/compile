@@ -36,7 +36,7 @@ fi
 mkdir -p $CACHE_DIR/lib
 ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 
-find $CACHE_DIR/ghc -type f -print0
+# find $CACHE_DIR/ghc -type f -print0
 
 # GHC has shell scripts with a bunch of hardcoded references to
 # /home/vagrant/ghc/*
