@@ -20,10 +20,11 @@ fi
 if [ -e $CACHE_DIR/dotghc ]; then
   rm -rf $HOME/.ghc
   mv $CACHE_DIR/dotghc $HOME/.ghc
+  ls $HOME/.ghc
 fi
 
 echo $HOME
-ls $HOME/.ghc
+ls $HOME
 rm $HOME/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
 
 
