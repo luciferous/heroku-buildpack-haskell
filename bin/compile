@@ -35,11 +35,11 @@ elif [ ! -e $HOME/.cabal ]; then
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 
+ldd /app/ghc/lib/ghc-7.0.3/ghc
+
 mkdir -p /app/usr/lib
 ln -fs /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
 ln -fs /usr/lib/libgmp.so.3 /usr/lib/libgmp.so
-
-# ln -fs /usr/lib /app/usr/lib
 
 # find $CACHE_DIR/ghc -type f -print0
 
