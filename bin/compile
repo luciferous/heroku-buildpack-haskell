@@ -38,8 +38,8 @@ fi
 ldd /app/ghc/lib/ghc-7.4.1/ghc
 
 mkdir -p /app/usr/lib
-ln -fs /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
-ln -fs /usr/lib/libgmp.so.3 /usr/lib/libgmp.so
+ln -s /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
+sudo ln -s /usr/lib/libgmp.so.3 /usr/lib/libgmp.so
 
 # find $CACHE_DIR/ghc -type f -print0
 
