@@ -36,6 +36,10 @@ fi
 mkdir -p $CACHE_DIR/lib
 ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 
+
+ls /home/vagrant
+find $CACHE_DIR/ghc -type
+
 # GHC has shell scripts with a bunch of hardcoded references to
 # /home/vagrant/ghc/*
 #
@@ -45,7 +49,6 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 export PATH=$CACHE_DIR/ghc/bin$PATH
 
 echo "-----> Checking ghc-paths"
-ls /home/vagrant
 export GHC_PACKAGE_PATH=$CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d:
 echo $GHC_PACKAGE_PATH
 echo $PATH
