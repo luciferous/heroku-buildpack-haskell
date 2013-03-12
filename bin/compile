@@ -55,7 +55,7 @@ echo $PATH
 which ghc
 which ghc-pkg
 
-alias ghc-pkg=$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg
+alias ghc-pkg='$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg'
 
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
