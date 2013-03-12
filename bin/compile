@@ -50,7 +50,7 @@ which ghc
 which ghc-pkg
 
 echo "-----> Setting up ghc-pkg"
-/ghc-pkg recache
+ghc-pkg recache
 ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
