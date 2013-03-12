@@ -37,7 +37,8 @@ fi
 
 mkdir -p /app/usr
 cp -R /usr/lib /app/usr
-ln -s /app/usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
+ln -s /app/usr/lib/libgmp.so.3.5.2 /app/usr/lib/libgmp.so
+# ln -s /app/usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
 export LD_LIBRARY_PATH=/usr/lib:/app/usr/lib
 echo $LD_LIBRARY_PATH
 
