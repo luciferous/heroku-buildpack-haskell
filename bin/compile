@@ -42,6 +42,9 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
+echo "-----> Check pkg-list"
+ghc-pkg list
+
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
 ghc-pkg describe base > base.conf
@@ -53,9 +56,6 @@ rm base.conf
 
 ghc-pkg recache
 ghc-pkg check
-
-echo "-----> Check pkg-list"
-ghc-pkg list
 
 # haskell-platform
 echo "-----> Download and install Haskell Platform"
