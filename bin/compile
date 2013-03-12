@@ -35,10 +35,10 @@ elif [ ! -e $HOME/.cabal ]; then
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 
+# Set LD_LIBRARAY_PATH and link essential libraries
 mkdir -p /app/usr
 cp -R /usr/lib /app/usr
 ln -s /app/usr/lib/libgmp.so.3.5.2 /app/usr/lib/libgmp.so
-# ln -s /app/usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
 export LD_LIBRARY_PATH=/app/usr/lib
 
 # find $CACHE_DIR/ghc -type f -print0
@@ -51,34 +51,7 @@ export LD_LIBRARY_PATH=/app/usr/lib
 
 export PATH=/app/ghc/bin$PATH
 
-echo "-----> Check local libs"
-ls /app/usr/lib
-
-echo "-----> Check global libs"
-ls /usr/lib
-
-echo "-----> Setting up ghc-pkg"
-
-# ghc-pkg recache
-# ghc-pkg describe base > base.conf
-
-# sed -i "s#ld-options:#ld-options: -L/app/lib#" base.conf
-# perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g" base.conf
-# ghc-pkg update base.conf
-# rm base.conf 
-
-# $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
-# $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg check --global-conf=$GHC_PACKAGE_PATH
-
-# ghc-pkg recache
-# ghc-pkg describe base > base.conf
-
-# sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
-# # perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g" base.conf
-# ghc-pkg update base.conf
-# rm base.conf 
-
-ghc-pkg recache
+echo "-----> Checking ghc-pkg"
 ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
