@@ -52,7 +52,7 @@ echo "-----> Checking ghc-paths"
 # export GHC_PACKAGE_PATH=$CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d
 # echo $GHC_PACKAGE_PATH
 ls $HOME
-ls /app/ghc/bin/
+ls /app
 # which ghc
 # which ghc-pkg
 
