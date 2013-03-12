@@ -42,7 +42,7 @@ find $CACHE_DIR/ghc -type f -print0
 # /home/vagrant/ghc/*
 #
 # Let's murder it to death.
-find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g"
+find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g"
 
 export PATH=$CACHE_DIR/ghc/bin$PATH
 
