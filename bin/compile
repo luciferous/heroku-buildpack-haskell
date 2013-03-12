@@ -21,6 +21,8 @@ if [ -e $CACHE_DIR/dotghc ]; then
   rm -rf $HOME/.ghc
   mv $CACHE_DIR/dotghc $HOME/.ghc
   ls $HOME/.ghc
+# else
+#   mv $CACHE_DIR $HOME
 fi
 
 # Restore Cabal cache or download an empty environemt
@@ -53,17 +55,19 @@ echo $PATH
 which ghc
 which ghc-pkg
 
+alias ghc-pkg=$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg
+
 echo "-----> Setting up ghc-pkg"
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg describe base --global-conf=$GHC_PACKAGE_PATH > base.conf
+ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
+ghc-pkg describe base --global-conf=$GHC_PACKAGE_PATH > base.conf
 
-# sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
-# perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-# ghc-pkg update base.conf
-# rm base.conf
+sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
+perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
+ghc-pkg update base.conf --global-conf=$GHC_PACKAGE_PATH
+rm base.conf 
 
-# ghc-pkg recache
-# ghc-pkg check
+ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
+ghc-pkg check --global-conf=$GHC_PACKAGE_PATH
 
 export PATH=$HOME/.cabal/bin:$PATH
 
