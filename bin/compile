@@ -10,10 +10,13 @@ CACHE_DIR=$2
 mkdir -p $CACHE_DIR
 
 if [ ! -e $CACHE_DIR/ghc ]; then
-  GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
+  # GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
+  GHC_URL="http://informatik.uni-kiel.de/~sad/ghc.tar.gz"
   echo "-----> Downloading GHC"
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
+
+rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
 
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
@@ -58,8 +61,8 @@ perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
 ghc-pkg update base.conf
 rm base.conf
 
-$CACHE_DIR/ghc/bin/ghc-pkg recache
-$CACHE_DIR/ghc/bin/ghc-pkg check
+ghc-pkg recache
+ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
 
