@@ -42,7 +42,7 @@ find $CACHE_DIR/ghc -type f -print0
 # /home/vagrant/ghc/*
 #
 # Let's murder it to death.
-find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g"
+# find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g"
 
 export PATH=$CACHE_DIR/ghc/bin$PATH
 
@@ -55,15 +55,15 @@ which ghc-pkg
 
 echo "-----> Setting up ghc-pkg"
 $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
-ghc-pkg describe base > base.conf
+# ghc-pkg describe base > base.conf
 
-sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
-perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-ghc-pkg update base.conf
-rm base.conf
+# sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
+# perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
+# ghc-pkg update base.conf
+# rm base.conf
 
-ghc-pkg recache
-ghc-pkg check
+# ghc-pkg recache
+# ghc-pkg check
 
 export PATH=$HOME/.cabal/bin:$PATH
 
