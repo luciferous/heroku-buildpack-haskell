@@ -57,10 +57,11 @@ echo "-----> Checking ghc-paths"
 # which ghc-pkg
 
 echo "-----> Setting up ghc-pkg"
+ghc-pkg describe base
 ghc-pkg recache
 ghc-pkg describe base > base.conf
 
-sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
+sed -i "s#ld-options:#ld-options: -L/app/lib#" base.conf
 # perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g" base.conf
 ghc-pkg update base.conf
 rm base.conf 
