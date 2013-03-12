@@ -42,65 +42,6 @@ find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/g
 
 PATH=$CACHE_DIR/ghc/bin:$PATH
 
-echo "-----> Setting up ghc-pkg"
-ghc-pkg recache
-ghc-pkg describe base > base.conf
-
-sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
-perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-ghc-pkg update base.conf
-rm base.conf
-
-ghc-pkg recache
-ghc-pkg check
-
-echo "-----> Check pkg-list"
-ghc-pkg list
-
-#!/usr/bin/env bash
-# bin/compile <build-dir> <cache-dir>
-
-# Fail fast and fail hard.
-set -eo pipefail
-
-BUILD_DIR=$1
-CACHE_DIR=$2
-
-mkdir -p $CACHE_DIR
-
-if [ ! -e $CACHE_DIR/ghc ]; then
-  GHC_URL="http://informatik.uni-kiel.de/~sad/ghc.tar.gz"
-  echo "-----> Downloading GHC"
-  curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
-fi
-
-# Restore GHC registry if available
-if [ -e $CACHE_DIR/dotghc ]; then
-  rm -rf $HOME/.ghc
-  mv $CACHE_DIR/dotghc $HOME/.ghc
-fi
-
-# Restore Cabal cache or download an empty environemt
-if [ -e $CACHE_DIR/cabal ]; then
-  rm -rf $HOME/.cabal
-  mv $CACHE_DIR/cabal $HOME/.cabal
-elif [ ! -e $HOME/.cabal ]; then
-  CABAL_URL="http://informatik.uni-kiel.de/~sad/cabal.tar.gz"
-  echo "-----> Downloading Cabal"
-  curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
-fi
-
-mkdir -p $CACHE_DIR/lib
-ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
-
-# GHC has shell scripts with a bunch of hardcoded references to
-# /home/vagrant/ghc/*
-#
-# Let's murder it to death.
-find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g"
-
-PATH=$CACHE_DIR/ghc/bin:$PATH
-
 echo "-----> Checking ghc"
 echo $PATH
 which ghc
