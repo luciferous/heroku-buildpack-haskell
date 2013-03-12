@@ -53,6 +53,7 @@ export PATH=/app/ghc/bin$PATH
 
 echo "-----> Checking ghc-pkg"
 ghc-pkg check
+ghc-pkg list
 
 export PATH=$HOME/.cabal/bin:$PATH
 
