@@ -16,13 +16,14 @@ if [ ! -e $CACHE_DIR/ghc ]; then
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
 
-rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
-
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
   rm -rf $HOME/.ghc
   mv $CACHE_DIR/dotghc $HOME/.ghc
 fi
+
+rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
+
 
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
