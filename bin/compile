@@ -48,7 +48,7 @@ echo $GHC_PACKAGE_PATH
 
 echo "-----> Setting up ghc-pkg"
 which ghc-pkg
-/app/tmp/repo.git/.cache/ghc/lib/ghc-7.4.1/ghc-pkg recache
+/app/tmp/repo.git/.cache/ghc/lib/ghc-7.4.1/ghc-pkg package --global-conf=$GHC_PACKAGE_PATH recache
 # $CACHE_DIR/ghc/bin/ghc-pkg describe base > base.conf
 
 # sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
