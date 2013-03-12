@@ -56,8 +56,14 @@ echo "-----> Checking ghc-paths"
 # which ghc
 # which ghc-pkg
 
-echo "-----> Setting up ghc-pkg"
+echo "-----> Check local libs"
+ls /app/usr/lib
+
+echo "-----> Check global libs"
 ls /usr/lib
+
+echo "-----> Setting up ghc-pkg"
+
 # ghc-pkg recache
 # ghc-pkg describe base > base.conf
 
