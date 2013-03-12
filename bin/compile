@@ -46,9 +46,6 @@ echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
 ghc-pkg describe base > base.conf
 
-echo "-----> Check pkg-list"
-ghc-pkg list
-
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
 ghc-pkg update base.conf
@@ -57,14 +54,17 @@ rm base.conf
 ghc-pkg recache
 ghc-pkg check
 
-# haskell-platform
-echo "-----> Download and install Haskell Platform"
-curl -# http://lambda.haskell.org/platform/download/2012.2.0.0/haskell-platform-2012.2.0.0.tar.gz | tar xz
-cd haskell-platform-2012.2.0.0
-./configure
-make
-make install
-cd ..
+echo "-----> Check pkg-list"
+ghc-pkg list
+
+# # haskell-platform
+# echo "-----> Download and install Haskell Platform"
+# curl -# http://lambda.haskell.org/platform/download/2012.2.0.0/haskell-platform-2012.2.0.0.tar.gz | tar xz
+# cd haskell-platform-2012.2.0.0
+# ./configure
+# make
+# make install
+# cd ..
 
 export PATH=$HOME/.cabal/bin:$PATH
 
