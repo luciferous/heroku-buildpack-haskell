@@ -54,7 +54,7 @@ $CACHE_DIR/ghc/bin/ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
 perl -i -p -e  "s{/home/vagrant/ghc}{$CACHE_DIR/ghc}g" base.conf
-$CACHE_DIR/ghc-pkg update base.conf
+$CACHE_DIR/ghc/bin/ghc-pkg update base.conf
 rm base.conf
 
 $CACHE_DIR/ghc/bin/ghc-pkg recache
