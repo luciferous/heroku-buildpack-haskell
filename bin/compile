@@ -23,8 +23,8 @@ if [ -e $CACHE_DIR/dotghc ]; then
   ls $HOME/.ghc
 fi
 
-ls $CACHE_DIR/ghc
-rm /app/tmp/repo.git/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
+ls $CACHE_DIR/ghc/lib
+rm $CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
 
 
 # Restore Cabal cache or download an empty environemt
