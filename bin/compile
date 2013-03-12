@@ -35,8 +35,8 @@ elif [ ! -e $HOME/.cabal ]; then
   curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
 fi
 
-mkdir -p /app/lib
-ln -fs /usr/lib/libgmp.so.3 /app/lib/libgmp.so
+mkdir -p /app/usr/lib
+ln -fs /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
 
 # find $CACHE_DIR/ghc -type f -print0
 
@@ -57,14 +57,14 @@ echo "-----> Checking ghc-paths"
 # which ghc-pkg
 
 echo "-----> Setting up ghc-pkg"
-ghc-pkg describe base
-ghc-pkg recache
-ghc-pkg describe base > base.conf
+ls /usr/lib
+# ghc-pkg recache
+# ghc-pkg describe base > base.conf
 
-sed -i "s#ld-options:#ld-options: -L/app/lib#" base.conf
+# sed -i "s#ld-options:#ld-options: -L/app/lib#" base.conf
 # perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g" base.conf
-ghc-pkg update base.conf
-rm base.conf 
+# ghc-pkg update base.conf
+# rm base.conf 
 
 # $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
 # $CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg check --global-conf=$GHC_PACKAGE_PATH
