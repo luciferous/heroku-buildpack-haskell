@@ -46,7 +46,7 @@ ln -fs /usr/lib/libgmp.so.3 $CACHE_DIR/lib/libgmp.so
 # Let's murder it to death.
 # find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g"
 
-export PATH=$CACHE_DIR/ghc/bin:$HOME/ghc/bin$PATH
+export PATH=$CACHE_DIR/ghc/bin:/app/ghc/bin$PATH
 
 echo "-----> Checking ghc-paths"
 # export GHC_PACKAGE_PATH=$CACHE_DIR/ghc/lib/ghc-7.4.1/package.conf.d
