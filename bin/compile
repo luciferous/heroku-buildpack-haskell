@@ -24,7 +24,10 @@ if [ -e $CACHE_DIR/dotghc ]; then
 fi
 
 echo $HOME
-ls $HOME
+pwd
+ls bin
+ls tmp
+ls lib
 rm $HOME/ghc/lib/ghc-7.4.1/package.conf.d/package_cache
 
 
