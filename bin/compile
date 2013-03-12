@@ -37,6 +37,8 @@ fi
 
 mkdir -p /app/usr/lib
 ln -fs /usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
+ln -fs /usr/lib/libgmp.so.3 /usr/lib/libgmp.so
+
 # ln -fs /usr/lib /app/usr/lib
 
 # find $CACHE_DIR/ghc -type f -print0
