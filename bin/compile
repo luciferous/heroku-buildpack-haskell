@@ -58,7 +58,7 @@ echo "-----> Checking ghc-paths"
 
 echo "-----> Setting up ghc-pkg"
 ghc-pkg recache
-$ghc-pkg describe base > base.conf
+ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
 # perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g" base.conf
@@ -93,7 +93,7 @@ echo "-----> Caching Cabal packages"
 shopt -s extglob
 rm $HOME/.cabal/bin/!(cabal|happy)
 mv $HOME/.cabal $CACHE_DIR/cabal
-mv $HOME/.ghc $CACHE_DIR/dotghc
+mv $HOME/ghc $CACHE_DIR/dotghc
 
 echo "Cache dir size:"
 du -ms $CACHE_DIR
