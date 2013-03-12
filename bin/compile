@@ -52,7 +52,7 @@ which ghc
 which ghc-pkg
 
 echo "-----> Setting up ghc-pkg"
-$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache
+$CACHE_DIR/ghc/lib/ghc-7.4.1/ghc-pkg recache --global-conf=$GHC_PACKAGE_PATH
 ghc-pkg describe base > base.conf
 
 sed -i "s#ld-options:#ld-options: -L$CACHE_DIR/lib#" base.conf
