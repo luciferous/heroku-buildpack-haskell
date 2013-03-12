@@ -39,8 +39,7 @@ mkdir -p /app/usr
 cp -R /usr/lib /app/usr
 ln -s /app/usr/lib/libgmp.so.3.5.2 /app/usr/lib/libgmp.so
 # ln -s /app/usr/lib/libgmp.so.3 /app/usr/lib/libgmp.so
-export LD_LIBRARY_PATH=/usr/lib:/app/usr/lib
-echo $LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/app/usr/lib
 
 # find $CACHE_DIR/ghc -type f -print0
 
@@ -90,7 +89,8 @@ cabal update
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
 # the ld library path hack is horrible, but let's see if it helps
-LD_LIBRARY_PATH=/app/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+# LD_LIBRARY_PATH=/app/lib cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
+cabal install
 
 echo "-----> Caching Cabal packages"
 shopt -s extglob
