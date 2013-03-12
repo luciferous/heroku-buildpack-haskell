@@ -37,7 +37,7 @@ elif [ ! -e $HOME/.cabal ]; then
 fi
 
 mkdir -p /app/lib
-ln -fs /usr/lib/libgmp.so.3 $/app/lib/libgmp.so
+ln -fs /usr/lib/libgmp.so.3 /app/lib/libgmp.so
 
 # find $CACHE_DIR/ghc -type f -print0
 
