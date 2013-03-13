@@ -18,8 +18,8 @@ fi
 
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
-  rm -rf $HOME/ghc
-  mv $CACHE_DIR/dotghc $HOME/ghc
+  rm -rf $HOME/.ghc
+  mv $CACHE_DIR/dotghc $HOME/.ghc
 else
   mv $CACHE_DIR/ghc $HOME
 fi
@@ -36,17 +36,9 @@ fi
 
 # Set LD_LIBRARAY_PATH and link essential libraries
 mkdir -p /app/usr
-cp -R /usr/lib /app/usr
+# cp -R /usr/lib /app/usr
 ln -s /app/usr/lib/libgmp.so.3.5.2 /app/usr/lib/libgmp.so
 export LD_LIBRARY_PATH=/app/usr/lib
-
-# find $CACHE_DIR/ghc -type f -print0
-
-# GHC has shell scripts with a bunch of hardcoded references to
-# /home/vagrant/ghc/*
-#
-# Let's murder it to death.
-# find $CACHE_DIR/ghc -type f -print0 | xargs -0 perl -i -p -e  "s{/app/ghc}{$CACHE_DIR/ghc}g"
 
 export PATH=/app/ghc/bin$PATH
 
@@ -61,7 +53,6 @@ cabal update
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
-
 cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
