@@ -18,9 +18,9 @@ fi
 
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
-  rm -rf $HOME/.ghc
-  mv $CACHE_DIR/dotghc $HOME/.ghc
-  ls $HOME/.ghc
+  rm -rf $HOME/ghc
+  mv $CACHE_DIR/dotghc $HOME/ghc
+  ls $HOME
 else
   mv $CACHE_DIR/ghc $HOME
 fi
