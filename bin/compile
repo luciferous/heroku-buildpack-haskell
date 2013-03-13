@@ -38,21 +38,17 @@ fi
 
 # Set LD_LIBRARAY_PATH and link essential libraries
 mkdir -p $FIXED_HOME/usr/lib
-# cp -R /usr/lib /app/usr
 ln -s /usr/lib/libgmp.so.3.5.2 $FIXED_HOME/usr/lib/libgmp.so
 export LD_LIBRARY_PATH=$FIXED_HOME/usr/lib
 
+# Set PATH
 export PATH=$FIXED_HOME/ghc/bin:$FIXED_HOME/.cabal/bin$PATH
-
-# echo "-----> Checking ghc-pkg"
-# ghc-pkg check
 
 echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
-# LD_LIBRARY_PATH=/app/lib 
 cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
