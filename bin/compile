@@ -11,10 +11,6 @@ FIXED_HOME=/app
 
 mkdir -p $CACHE_DIR
 
-rm -rf $HOME/ghc
-rm -rf $HOME/.ghc
-rm -rf $HOME/.cabal
-
 if [ ! -e $CACHE_DIR/ghc ]; then
   GHC_URL="http://informatik.uni-kiel.de/~sad/ghc.tar.gz"
   echo "-----> Downloading GHC"
