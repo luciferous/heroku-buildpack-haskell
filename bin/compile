@@ -7,10 +7,15 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+FIXED_HOME=/app
+
 mkdir -p $CACHE_DIR
 
+rm -rf $HOME/ghc
+rm -rf $HOME/.ghc
+rm -rf $HOME/.cabal
+
 if [ ! -e $CACHE_DIR/ghc ]; then
-  # GHC_URL="http://s3.amazonaws.com/haskell-heroku-buildpack/ghc.tar.gz"
   GHC_URL="http://informatik.uni-kiel.de/~sad/ghc.tar.gz"
   echo "-----> Downloading GHC"
   curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
@@ -18,50 +23,49 @@ fi
 
 # Restore GHC registry if available
 if [ -e $CACHE_DIR/dotghc ]; then
-  rm -rf $HOME/.ghc
-  mv $CACHE_DIR/dotghc $HOME/.ghc
+  rm -rf $FIXED_HOME/app/.ghc
+  mv $CACHE_DIR/dotghc $FIXED_HOME/.ghc
 fi
 
-mv $CACHE_DIR/ghc $HOME
+# Fix directory
+mv $CACHE_DIR/ghc $FIXED_HOME
 
 # Restore Cabal cache or download an empty environemt
 if [ -e $CACHE_DIR/cabal ]; then
-  rm -rf $HOME/.cabal
-  mv $CACHE_DIR/cabal $HOME/.cabal
-elif [ ! -e $HOME/.cabal ]; then
+  rm -rf $FIXED_HOME/.cabal
+  mv $CACHE_DIR/cabal $FIXED_HOME/.cabal
+elif [ ! -e $FIXED_HOME/.cabal ]; then
   CABAL_URL="http://informatik.uni-kiel.de/~sad/cabal.tar.gz"
   echo "-----> Downloading Cabal"
-  curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $HOME
+  curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $FIXED_HOME
 fi
 
 # Set LD_LIBRARAY_PATH and link essential libraries
-mkdir -p /app/usr/lib
+mkdir -p $FIXED_HOME/usr/lib
 # cp -R /usr/lib /app/usr
-ln -s /usr/lib/libgmp.so.3.5.2 /app/usr/lib/libgmp.so
-export LD_LIBRARY_PATH=/app/usr/lib
+ln -s /usr/lib/libgmp.so.3.5.2 $FIXED_HOME/usr/lib/libgmp.so
+export LD_LIBRARY_PATH=$FIXED_HOME/usr/lib
 
-export PATH=/app/ghc/bin$PATH
+export PATH=$FIXED_HOME/ghc/bin:$FIXED_HOME/.cabal/bin$PATH
 
-echo "-----> Checking ghc-pkg"
-ghc-pkg check
-# ghc-pkg list
-
-export PATH=$HOME/.cabal/bin:$PATH
+# echo "-----> Checking ghc-pkg"
+# ghc-pkg check
 
 echo "-----> Updating Cabal"
 cabal update
 
 echo "-----> Release the hounds! Installing application"
 cd $BUILD_DIR
+# LD_LIBRARY_PATH=/app/lib 
 cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared
 
 echo "-----> Caching Cabal packages"
-echo $HOME/.ghc
+echo $FIXED_HOME/.ghc
 shopt -s extglob
-rm $HOME/.cabal/bin/!(cabal|happy)
-mv $HOME/.cabal $CACHE_DIR/cabal
-mv $HOME/ghc $CACHE_DIR/ghc
-mv $HOME/.ghc $CACHE_DIR/dotghc
+rm $FIXED_HOME/.cabal/bin/!(cabal|happy)
+mv $FIXED_HOME/.cabal $CACHE_DIR/cabal
+mv $FIXED_HOME/ghc $CACHE_DIR/ghc
+mv $FIXED_HOME/.ghc $CACHE_DIR/dotghc
 
 echo "Cache dir size:"
 du -ms $CACHE_DIR
