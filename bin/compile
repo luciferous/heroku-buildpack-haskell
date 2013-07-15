@@ -7,42 +7,59 @@ set -eo pipefail
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-cd $BUILD_DIR
+FIXED_HOME=/app
 
 mkdir -p $CACHE_DIR
 
-cp -R $CACHE_DIR/ghc ghc &> /dev/null || true
-cp -R $CACHE_DIR/cabal .cabal &> /dev/null || true
-
-if [ ! -e ghc ]; then
-  GHC_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/ghc.tar.gz"
+if [ ! -e $CACHE_DIR/ghc ]; then
+  GHC_URL="http://informatik.uni-kiel.de/~sad/ghc.tar.gz"
   echo "-----> Downloading GHC"
-  curl -# --max-time 120 -L "$GHC_URL" | tar xz
+  curl -# --max-time 120 -L "$GHC_URL" | tar xz -C $CACHE_DIR
 fi
 
-if [ ! -e .cabal ]; then
-  CABAL_URL="http://s3.amazonaws.com/heroku-buildpack-haskell/cabal.tar.gz"
-  echo "-----> Bundling Cabal"
-  curl -# --max-time 120 -L "$CABAL_URL" | tar xz
+# Restore GHC registry if available
+if [ -e $CACHE_DIR/dotghc ]; then
+  rm -rf $FIXED_HOME/app/.ghc
+  mv $CACHE_DIR/dotghc $FIXED_HOME/.ghc
 fi
 
-mkdir -p bin
-ln -s ghc/bin/ghc bin/ghc
-ln -s .cabal/bin/cabal bin/cabal
+# Fix directory
+mv $CACHE_DIR/ghc $FIXED_HOME
 
-mkdir -p lib
-ln -s /usr/lib/libgmp.so.3 lib/libgmp.so
+# Restore Cabal cache or download an empty environemt
+if [ -e $CACHE_DIR/cabal ]; then
+  rm -rf $FIXED_HOME/.cabal
+  mv $CACHE_DIR/cabal $FIXED_HOME/.cabal
+elif [ ! -e $FIXED_HOME/.cabal ]; then
+  CABAL_URL="http://informatik.uni-kiel.de/~sad/cabal.tar.gz"
+  echo "-----> Downloading Cabal"
+  curl -# --max-time 120 -L "$CABAL_URL" | tar xz -C $FIXED_HOME
+fi
 
-ghc/bin/ghc-pkg describe base > base.conf
-sed -i "s#ld-options:#ld-options: -L`pwd`/lib#"
-ghc/bin/ghc-pkg update base.conf
-rm base.conf
+# Set LD_LIBRARAY_PATH and link essential libraries
+mkdir -p $FIXED_HOME/usr/lib
+ln -s /usr/lib/libgmp.so.3.5.2 $FIXED_HOME/usr/lib/libgmp.so
+export LD_LIBRARY_PATH=$FIXED_HOME/usr/lib
 
-.cabal/bin/cabal update
-.cabal/bin/cabal install
+# Set PATH
+export PATH=$FIXED_HOME/ghc/bin:$FIXED_HOME/.cabal/bin$PATH
 
-rm -rf $CACHE_DIR/ghc
-cp -R ghc $CACHE_DIR/ghc
+echo "-----> Updating Cabal"
+cabal update
 
-rm -rf $CACHE_DIR/cabal
-cp -R .cabal $CACHE_DIR/cabal
+echo "-----> Release the hounds! Installing application"
+cd $BUILD_DIR
+cabal install -j5 --disable-library-profiling --disable-executable-profiling --disable-shared --disable-tests
+
+echo "-----> Caching Cabal packages"
+echo $FIXED_HOME/.ghc
+shopt -s extglob
+rm $FIXED_HOME/.cabal/bin/!(cabal|happy)
+mv $FIXED_HOME/.cabal $CACHE_DIR/cabal
+mv $FIXED_HOME/ghc $CACHE_DIR/ghc
+mv $FIXED_HOME/.ghc $CACHE_DIR/dotghc
+
+echo "Cache dir size:"
+du -ms $CACHE_DIR
+echo "Build dir size:"
+du -ms $BUILD_DIR
